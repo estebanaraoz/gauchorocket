@@ -7,6 +7,7 @@ $_GET = extractGetParams();
 
 include_once($_SERVER["DOCUMENT_ROOT"]."/public/header.php");
 
+
 $filename = $_SERVER["DOCUMENT_ROOT"]."/controlador/controlador_" . $nombreModulo . ".php";
 if( file_exists($filename) ){
 

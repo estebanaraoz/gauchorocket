@@ -1,6 +1,7 @@
 <!-- The Band Section -->
-<div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="band">
-    <h2 class="w3-wide">Iniciar sesión</h2>
+<!-- <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="band"> -->
+    <br><br>
+    <h2 class="">Crear una cuenta</h2>
     <form action="modelo/modelo_validar_registro.php" method="post">
         <div class="form-group">
             <label for="email">Email</label>
@@ -19,6 +20,4 @@
         <br>
         <input id="registrarse" name="registrarse" type="submit" class="btn btn-primary" value="Registrarse">
     </form>
-</div>
-
-
+<!-- </div> -->

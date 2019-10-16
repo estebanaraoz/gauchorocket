@@ -13,7 +13,30 @@
 <body>
 
 <!-- Navbar -->
-<div class="w3-top">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">GauchoRocket</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="viajes">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="registro">Crear cuenta</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="login">Iniciar sesión</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="viajes/buscar/id/1">Buscar</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- <div class="w3-top">
     <ul class="nav">
         <li class="nav-item">
             <a class="nav-link" href="registro">Crear cuenta</a>
@@ -25,10 +48,8 @@
             <a class="nav-link" href="viajes/buscar/id/1">Buscar</a>
         </li>
     </ul>
-</div>
+</div> -->
 
 <!-- Page content -->
-<div class="w3-content" style="max-width:2000px;margin-top:46px">
-
-    <!-- The Band Section -->
-    <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="band">
+<!-- <div class="w3-content" style="max-width:2000px;margin-top:46px"> -->
+    <div class="container">

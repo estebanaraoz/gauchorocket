@@ -27,11 +27,9 @@ function getViajes(){
             $viajes[] = $viaje;
         }
     }
-
     mysqli_close($conn);
 
     return $viajes;
-
 }
 
 function buscarViajesPorId($busqueda){
