@@ -34,7 +34,7 @@ function parseRoutes(){
 }
 
 function extraerNombreDeModulo($routes){
-    return !empty($routes[1]) ? $routes[1] : "viajes";
+    return !empty($routes[1]) ? $routes[1] : "busqueda";
 }
 
 function extraerNombreDeAccion($routes){
