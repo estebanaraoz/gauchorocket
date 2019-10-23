@@ -24,8 +24,8 @@ echo   "<tr>
         </tr>";
 }
 } else {
-    // echo "No se han encontrado viajes.";
-    header("location: busqueda");
+    echo "No se han encontrado viajes.";
+    //header("location: busqueda");
 }
 ?>
     </table>

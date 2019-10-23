@@ -21,7 +21,7 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" href="viajes">Home</a>
+        <a class="nav-link" href="/">Home</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="registro">Crear cuenta</a>
@@ -30,7 +30,7 @@
         <a class="nav-link" href="login">Iniciar sesión</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="viajes/buscar/id/1">Buscar</a>
+        <a class="nav-link" href="busqueda">Buscar</a>
       </li>
     </ul>
   </div>

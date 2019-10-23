@@ -3,7 +3,7 @@ include($_SERVER["DOCUMENT_ROOT"]."/helpers/conexion.php");
     //Realiza conexion con la base de datos.
     $conn = getConexion();
 
-    if(isset($_POST['buscar'])){
+    if(isset($_POST['buscar']) && isset($_POST['lugar'])){
         $lugar = $_POST['lugar'];
 
         // Consulta
@@ -27,7 +27,7 @@ include($_SERVER["DOCUMENT_ROOT"]."/helpers/conexion.php");
               $viaje['idLugar'] =  $row["id_lugar"];
               $viajes[] = $viaje;
           }
-          include($_SERVER["DOCUMENT_ROOT"]."/controlador/controlador_viajes.php");
+          //include($_SERVER["DOCUMENT_ROOT"]."/controlador/controlador_viajes.php");
 
         }else{
           echo "No hay resultados para la búsqueda";
