@@ -1,12 +1,14 @@
 <?php
-include($_SERVER["DOCUMENT_ROOT"]."/modelo/modelo_busqueda.php");
+// if(isset($_POST['buscar'])){
+  include($_SERVER["DOCUMENT_ROOT"]."/modelo/modelo_busqueda.php");
+// }
 
-include($_SERVER["DOCUMENT_ROOT"]."/vista/vista_busqueda.php");
+  include($_SERVER["DOCUMENT_ROOT"]."/vista/vista_busqueda.php");
 
-function viajes_buscarPorId($busqueda){
-    $viajes = buscarViajesPorId($busqueda);
-
-    // include($_SERVER["DOCUMENT_ROOT"]."/vista/vista_busqueda.php");
-}
+// function viajes_buscarPorId($busqueda){
+//     $viajes = buscarViajesPorId($busqueda);
+//
+//     // include($_SERVER["DOCUMENT_ROOT"]."/vista/vista_busqueda.php");
+// }
 
  ?>

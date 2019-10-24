@@ -10,7 +10,7 @@
 // function viajes_buscarPorId($busqueda){
 //     $viajes = buscarViajesPorId($busqueda);
 
-    include($_SERVER["DOCUMENT_ROOT"]."/vista/vista_viajes.php");
+include($_SERVER["DOCUMENT_ROOT"]."/vista/vista_viajes.php");
 // }
 
 ?>

@@ -1,4 +1,4 @@
-<!-- <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="band"> -->
+<?php include_once($_SERVER["DOCUMENT_ROOT"]."/public/header.php");?>
 <br><br>
     <h2>Viajes</h2>
     <table class="table">
@@ -9,8 +9,8 @@ echo "  <tr>
             <th>LLEGADA</th>
             <th>DURACION</th>
             <th>PRECIO</th>
-            <th>TIPO</th>
-            <th>LUGAR</th>
+            <th>LUGAR ORIGEN</th>
+            <th>LUGAR DESTINO</th>
         </tr>
         ";
 foreach ($viajes as $viaje){
@@ -19,8 +19,8 @@ echo   "<tr>
             <td>" . $viaje['llegadaViaje'] . "</td>
             <td>" . $viaje['duracion'] . "</td>
             <td>" . $viaje['precio'] . "</td>
-            <td>" . $viaje['idTipoViaje'] . "</td>
-            <td>" . $viaje['idLugar'] . "</td>
+            <td>" . $viaje['lugarOrigen'] . "</td>
+            <td>" . $viaje['lugarDestino'] . "</td>
         </tr>";
 }
 } else {
