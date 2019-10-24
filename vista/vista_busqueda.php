@@ -37,7 +37,7 @@
         <label for="vuelta">Tipo de viaje</label>
         <input type="text" class="form-control" name="vuelta" id="tipo">
       </div> -->
-      <div class="col-auto">
+      <div class="col-auto" style="margin-top: 28px;">
         <button type="submit" name="buscar" id="buscar" class="btn btn-primary boton-busqueda">Buscar</button>
       </div>
 
