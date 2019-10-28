@@ -11,7 +11,7 @@ include($_SERVER["DOCUMENT_ROOT"]."/helpers/conexion.php");
 
 
       $criterio="";
-      $sql = 'SELECT v.salida_viaje as salida_viaje,v.llegada_viaje as llegada_viaje,v.duracion,v.precio,v.id_tipo_viaje,l.nombre_lugar as lugar_origen,lu.nombre_lugar as lugar_destino
+      $sql = 'SELECT v.salida_viaje as salida_viaje,v.llegada_viaje as llegada_viaje,v.duracion,v.precio,v.id_tipo_viaje,l.nombre_lugar as lugar_origen,lu.nombre_lugar as lugar_destino, v.id_viaje
               FROM viaje v INNER JOIN lugar l
               on v.id_lugar_origen = l.id_lugar
               INNER JOIN lugar lu
@@ -56,6 +56,7 @@ include($_SERVER["DOCUMENT_ROOT"]."/helpers/conexion.php");
                       $viaje['idTipoViaje'] =  $row["id_tipo_viaje"];
                       $viaje['lugarOrigen'] =  $row["lugar_origen"];
                       $viaje['lugarDestino'] = $row["lugar_destino"];
+                      $viaje['idViaje'] = $row["id_viaje"];
                       $viajes[] = $viaje;
                   }
                   // include($_SERVER["DOCUMENT_ROOT"]."/controlador/controlador_viajes.php");
