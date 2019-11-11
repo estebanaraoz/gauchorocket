@@ -10,18 +10,19 @@ if(isset($_POST['registrarse'])){
     $email = $_POST['email'];
 
     //Realiza consulta de todos los viajes pesistidos en la base de datos.
-    $sqlVerificacionUsuario = "SELECT * FROM cliente WHERE usuario = '$user'";
+    $sqlVerificacionUsuario = "SELECT * FROM usuario WHERE nombre = '$user'";
     $resultUser = mysqli_query($conn, $sqlVerificacionUsuario) or die("Error al realizar la consulta del usuario.");
 
-    $sqlVerificacionMail = "SELECT * FROM cliente WHERE email = '$email'";
+    $sqlVerificacionMail = "SELECT * FROM usuario WHERE email = '$email'";
     $resultMail = mysqli_query($conn, $sqlVerificacionMail) or die("Error al realizar la consulta del email.");
 
     if(mysqli_num_rows($resultUser) ==0){
         if(mysqli_num_rows($resultMail) ==0){
-            $query = "insert into cliente(usuario,password,email, tipo_cliente)values(\"$user\",\"$password\",\"$email\",2);"
-            or die(mysqli_errno);
-            $resultado = mysqli_query($conn,$query);
-            header("Location:index.php");
+            $query = "insert into usuario(nombre,email,contrasena, id_tipo_usuario) values (\"$user\",\"$email\",\"$password\",1);";
+                
+            $resultado = mysqli_query($conn,$query) or die($query);
+            
+            header("Location:../controlador/controlador_busqueda.php");
             exit();
         }
         else{
