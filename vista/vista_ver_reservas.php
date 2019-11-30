@@ -1,9 +1,10 @@
-<?php include_once($_SERVER["DOCUMENT_ROOT"]."/public/header.php");?>
+
 <br><br>
     <h2>Reservas</h2>
     <table class="table">
 <?php
 if (isset($reservas)){
+
 echo "  <tr>
             <th>Codigo</th>
             <th>vencimiento</th>
@@ -20,12 +21,13 @@ echo   "<tr>
             <td>" . $reserva['estado'] . "</td>
             <td>". $reserva['cabina'] . "</td>
             <td>" . $reserva['servicio'] . "</td>
-            <td>$" . $reserva['precio'] . "</td>
-            <td><a href='controlador_pago.php?idreserva=". $reserva['idreserva'] . "'>pagar</a></td>
-        </tr>";
+            <td>$" . $reserva['precio'] . "</td>"
+			.identificarEstado($reserva['idestado'],$reserva['idreserva']).
+		"</tr>";
+	
 }
 } else {
-    echo "No se han encontrado viajes.";
+    echo "No se han encontrado reservas.";
     //header("location: busqueda");
 }
 ?>

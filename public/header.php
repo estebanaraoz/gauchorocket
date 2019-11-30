@@ -5,7 +5,6 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
 <title>GauchoRocket</title>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -24,14 +23,31 @@
         <a class="nav-link" href="/">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="registro">Crear cuenta</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="login">Iniciar sesión</a>
-      </li>
-      <li class="nav-item">
         <a class="nav-link" href="busqueda">Buscar</a>
       </li>
+    <?php 
+	session_start();
+    if(isset($_SESSION['user'])){
+		echo '<li class="nav-item">
+        <a class="nav-link" href="controlador/controlador_ver_reservas.php">Reservas</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="modelo/salir.php">salir</a>
+      </li>';
+	 if ($_SESSION['user']["id_tipo_usuario"] == 1){
+		 echo'<li class="nav-item">
+        <a class="nav-link" href="controlador/controlador_administador.php">administrador</a>
+      </li>';
+	 }
+	  }else { 
+	  echo '<li class="nav-item">
+        <a class="nav-link" href="login">Iniciar sesión</a>
+      </li>
+	  <li class="nav-item">
+        <a class="nav-link" href="registro">Crear cuenta</a>
+      </li>';
+	  } 
+            ?>    
     </ul>
   </div>
 </nav>

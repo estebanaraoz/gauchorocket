@@ -1,5 +1,4 @@
 <?php
-
 include($_SERVER["DOCUMENT_ROOT"]."/helpers/conexion.php");
     //Realiza conexion con la base de datos.
     $conn = getConexion();
