@@ -15,7 +15,6 @@ if(isset($_POST['login'])){
     //Mensajes de respuesta.
     if (mysqli_num_rows($result) > 0) {
         while($row = mysqli_fetch_assoc($result)) {
-            //En cada vuelta del while crea una variable que contiene cada viaje.
             $_SESSION["id_usuario"] = $row["id_usuario"];
         }
 

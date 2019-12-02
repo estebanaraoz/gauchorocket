@@ -29,9 +29,11 @@ session_start();
 <?php
     if (isset($_SESSION["id_usuario"])){
         echo "
-        
       <li class=\"nav-item\">
-        <a class=\"nav-link\" href=\"salir\">Cerrar sesión</a>
+        <a class=\"nav-link\" href=\"hospital_ver\">Turno Medico</a>
+      </li>
+      <li class=\"nav-item\">
+        <a class=\"nav-link\" href=\"salir\">Cerrar Sesión</a>
       </li>
         
         ";
@@ -39,10 +41,10 @@ session_start();
         echo "
         
       <li class=\"nav-item\">
-        <a class=\"nav-link\" href=\"registro\">Crear cuenta</a>
+        <a class=\"nav-link\" href=\"registro\">Crear Cuenta</a>
       </li>
       <li class=\"nav-item\">
-        <a class=\"nav-link\" href=\"login\">Iniciar sesión</a>
+        <a class=\"nav-link\" href=\"login\">Iniciar Sesión</a>
       </li>
         
         ";
