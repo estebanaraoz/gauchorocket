@@ -7,6 +7,7 @@ function getHospital(){
         SELECT th.id_turno as id_turno, hos.nombre as nombre, th.turnos as turnos, th.fecha as fecha
         FROM `turno_hospital` as th
         INNER JOIN hospital as hos on hos.id_hospital = th.id_hospital
+        WHERE th.turnos > 0
     ";
 
     $result= mysqli_query($conn,$sql) or die("Error al consultar los turnos de hospitales.");
