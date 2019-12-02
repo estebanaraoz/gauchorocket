@@ -1,5 +1,5 @@
 <?php
-include($_SERVER["DOCUMENT_ROOT"]."/helpers/conexion.php");
+include("helpers/conexion.php");
 
 //Realiza conexion con la base de datos.
 $conn = getConexion();
@@ -10,28 +10,64 @@ if(isset($_POST['registrarse'])){
     $email = $_POST['email'];
 
     //Realiza consulta de todos los viajes pesistidos en la base de datos.
-    $sqlVerificacionUsuario = "SELECT * FROM cliente WHERE usuario = '$user'";
+    $sqlVerificacionUsuario = "SELECT * FROM usuario WHERE nombre = '$user'";
     $resultUser = mysqli_query($conn, $sqlVerificacionUsuario) or die("Error al realizar la consulta del usuario.");
 
-    $sqlVerificacionMail = "SELECT * FROM cliente WHERE email = '$email'";
+    $sqlVerificacionMail = "SELECT * FROM usuario WHERE email = '$email'";
     $resultMail = mysqli_query($conn, $sqlVerificacionMail) or die("Error al realizar la consulta del email.");
 
     if(mysqli_num_rows($resultUser) ==0){
         if(mysqli_num_rows($resultMail) ==0){
-            $query = "insert into cliente(usuario,password,email, tipo_cliente)values(\"$user\",\"$password\",\"$email\",2);"
+            $query = "insert into usuario(nombre,contrasena,email,id_tipo_usuario) values (\"$user\",\"$password\",\"$email\",2);"
             or die(mysqli_errno);
             $resultado = mysqli_query($conn,$query);
-            header("Location:index.php");
-            exit();
+            if(mysqli_num_rows($resultUser) ==0){
+                echo "Usuario registrado exitosamente.
+                <script>
+                <!--
+                function timedRefresh(timeoutPeriod) {
+                    setTimeout(\"window.location.replace('/');\",timeoutPeriod);
+                }
+                
+                window.onload = timedRefresh(5000);
+                
+                //   -->
+                </script>
+                ";
+            } else {
+                echo "Hubo un error al registrar su usuario.<br>
+                <button class=\"btn btn-primary\" onclick=\"goBack()\">Regresar</button>
+                
+                <script>
+                function goBack() {
+                  window.history.back();
+                }
+                </script>
+            ";
+            }
         }
         else{
-            echo "El mail ya fue utilizado";
-            exit();
+            echo "El mail ya fue utilizado<br>
+                <button class=\"btn btn-primary\" onclick=\"goBack()\">Regresar</button>
+                
+                <script>
+                function goBack() {
+                  window.history.back();
+                }
+                </script>
+            ";
         }
     }
     else {
-        echo "El usuario ya fue utilizado";
-        exit();
+        echo "El usuario ya fue utilizado<br>
+                <button class=\"btn btn-primary\" onclick=\"goBack()\">Regresar</button>
+                
+                <script>
+                function goBack() {
+                  window.history.back();
+                }
+                </script>
+        ";
     }
 }
 ?>
