@@ -21,7 +21,10 @@ echo "ID USUARIO".$idUsuario;
 
 $conn=getConexion();
 
+    $existenErrores = false;
     $isAcompanantesValidos = true;
+	$idAcompanantes[] = null;
+	$idReserva = 12;
     for ($i = 1; $i-1 < $cantAcompanantes; $i++) {
         echo "</br>Mail acompanante ".$i." ".$_POST["acompanante".$i];
         $sql = "
@@ -31,27 +34,51 @@ $conn=getConexion();
         ";
 
         $result = mysqli_query($conn,$sql);
-        if (mysqli_fetch_array($result) == 0){
+        if (mysqli_fetch_array($result) > 0){
+			foreach($result as $row){
+				$idAcompanantes[$i] = $row["id_usuario"];
+			}
+        } else {
             $isAcompanantesValidos = false;
-        }
+		}
     }
 
-    //echo var_export($isAcompanantesValidos, true);
-/*
-    $sql = "insert into reserva (id_viaje,vencimiento_reserva,id_estado_reserva,cod_cabina,cod_servicio,precio) 
-            values ($idViaje,\"$fecha\",1, $idCabina, $idServicio,100)";
-    //$result = mysqli_query($conn, $sql);
-    $result =mysqli_query($conn,$sql)or die($sql);
-
-    return $result;
-$ultimo_id = mysqli_insert_id($result);
-
-$query="insert into usario_hace_reserva(id_reserva,id_usuario)
-            values($ultimo_id,$idUsuario);";
-if(isset($_POST['agregar_acompañante']))
-for($a=0;$a<5;$a++){
-if(isset($_POST['acompañante'+$a+''])){
-    $query="";
-    }
-}*/
+	if (!$isAcompanantesValidos){$existenErrores = true;}
+	
+    if ($existenErrores){
+        echo "</br>Existen errores</br>
+                <button class=\"btn btn-primary\" onclick=\"goBack()\">Regresar</button>
+                
+                <script>
+                function goBack() {
+                  window.history.back();
+                }
+                </script>        
+        ";
+    } else {
+		$sql = "
+			INSERT INTO reserva (id_viaje, vencimiento_reserva, id_estado_reserva, cod_cabina, cod_servicio, valor)
+			VALUES ($idViaje, \"$fecha\", 1, $idCabina, $idServicio, 100)
+		";
+		//echo $sql;
+		mysqli_query($conn, $sql) or die ("Error al realizar la reserva.");
+		$idReserva = mysqli_insert_id($conn);
+		
+		$sql = "
+			INSERT INTO usuario_hace_reserva(id_reserva,id_usuario)
+			VALUE ($idReserva, $idUsuario)
+		";
+		mysqli_query($conn,$sql)or die("Error al asignar usuario a reserva.");
+		
+		for ($i = 1; $i-1 < $cantAcompanantes; $i++) {
+			//echo "</br>Mail acompanante ".$i." ".$_POST["acompanante".$i];
+			echo $idAcompanantes[$i];
+			
+			$sql = "
+				INSERT INTO usuario_hace_reserva
+				VALUES ($idReserva, $idAcompanantes[$i]) 
+			";
+			mysqli_query($conn,$sql)or die("Error al asignar el acompañante $idAcompanantes[$i] a la reserva. $sql");
+		}
+	}
 ?>
