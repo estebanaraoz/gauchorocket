@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
+-- version 4.6.5.2
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3307
--- Tiempo de generación: 02-12-2019 a las 22:09:04
--- Versión del servidor: 10.4.8-MariaDB
--- Versión de PHP: 7.3.10
+-- Tiempo de generación: 03-12-2019 a las 00:40:13
+-- Versión del servidor: 10.1.21-MariaDB
+-- Versión de PHP: 7.1.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -187,22 +185,31 @@ CREATE TABLE `pasajero` (
 
 CREATE TABLE `reserva` (
   `id_reserva` int(11) NOT NULL,
-  `vencimiento_reserva` datetime DEFAULT NULL,
+  `id_viaje` int(11) NOT NULL,
+  `vencimiento_reserva` datetime NOT NULL,
   `id_estado_reserva` int(11) DEFAULT NULL,
   `cod_cabina` int(11) NOT NULL,
-  `cod_servicio` int(11) NOT NULL
+  `cod_servicio` int(11) NOT NULL,
+  `valor` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `reserva`
 --
 
-INSERT INTO `reserva` (`id_reserva`, `vencimiento_reserva`, `id_estado_reserva`, `cod_cabina`, `cod_servicio`) VALUES
-(1, NULL, 2, 3, 1),
-(2, NULL, 2, 3, 1),
-(3, NULL, 2, 3, 1),
-(4, NULL, 2, 3, 1),
-(5, NULL, 2, 3, 1);
+INSERT INTO `reserva` (`id_reserva`, `id_viaje`, `vencimiento_reserva`, `id_estado_reserva`, `cod_cabina`, `cod_servicio`, `valor`) VALUES
+(1, 1, '0000-00-00 00:00:00', 2, 3, 1, 0),
+(2, 1, '0000-00-00 00:00:00', 2, 3, 1, 0),
+(3, 1, '0000-00-00 00:00:00', 2, 3, 1, 0),
+(4, 1, '0000-00-00 00:00:00', 2, 3, 1, 0),
+(5, 1, '0000-00-00 00:00:00', 2, 3, 1, 0),
+(6, 3, '2019-12-08 02:00:00', 1, 2, 2, 100),
+(7, 3, '2019-12-08 02:00:00', 1, 2, 2, 100),
+(8, 3, '2019-12-08 02:00:00', 1, 2, 2, 100),
+(9, 3, '2019-12-08 02:00:00', 1, 2, 2, 100),
+(10, 3, '2019-12-08 02:00:00', 1, 2, 2, 100),
+(11, 3, '2019-12-08 02:00:00', 1, 2, 2, 100),
+(12, 3, '2019-12-08 02:00:00', 1, 2, 2, 100);
 
 -- --------------------------------------------------------
 
@@ -329,6 +336,14 @@ CREATE TABLE `usuario_hace_reserva` (
   `id_reserva` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `usuario_hace_reserva`
+--
+
+INSERT INTO `usuario_hace_reserva` (`id_reserva`, `id_usuario`) VALUES
+(12, 1),
+(12, 3);
 
 -- --------------------------------------------------------
 
@@ -473,7 +488,8 @@ ALTER TABLE `reserva`
   ADD PRIMARY KEY (`id_reserva`),
   ADD KEY `id_estado_reserva` (`id_estado_reserva`),
   ADD KEY `cod_cabina` (`cod_cabina`),
-  ADD KEY `cod_servicio` (`cod_servicio`);
+  ADD KEY `cod_servicio` (`cod_servicio`),
+  ADD KEY `fk_id_viaje_reserva` (`id_viaje`);
 
 --
 -- Indices de la tabla `servicio`
@@ -546,20 +562,17 @@ ALTER TABLE `viaje_puede_ser_hecho_por`
 -- AUTO_INCREMENT de la tabla `reserva`
 --
 ALTER TABLE `reserva`
-  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
+  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
   MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
 --
 -- AUTO_INCREMENT de la tabla `usuario_hace_reserva`
 --
 ALTER TABLE `usuario_hace_reserva`
-  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- Restricciones para tablas volcadas
 --
@@ -589,6 +602,7 @@ ALTER TABLE `pasajero`
 -- Filtros para la tabla `reserva`
 --
 ALTER TABLE `reserva`
+  ADD CONSTRAINT `fk_id_viaje_reserva` FOREIGN KEY (`id_viaje`) REFERENCES `viaje` (`id_viaje`),
   ADD CONSTRAINT `reserva_ibfk_1` FOREIGN KEY (`id_estado_reserva`) REFERENCES `estado_reserva` (`id_estado_reserva`),
   ADD CONSTRAINT `reserva_ibfk_2` FOREIGN KEY (`cod_cabina`) REFERENCES `cabina` (`id_cabina`),
   ADD CONSTRAINT `reserva_ibfk_3` FOREIGN KEY (`cod_servicio`) REFERENCES `servicio` (`id_servicio`);
@@ -634,7 +648,6 @@ ALTER TABLE `viaje_nave_cabina`
 ALTER TABLE `viaje_puede_ser_hecho_por`
   ADD CONSTRAINT `viaje_puede_ser_hecho_por_ibfk_1` FOREIGN KEY (`id_estado_fisico`) REFERENCES `estado_fisico` (`id_estado_fisico`),
   ADD CONSTRAINT `viaje_puede_ser_hecho_por_ibfk_2` FOREIGN KEY (`id_tipo_viaje`) REFERENCES `tipo_viaje` (`id_tipo_viaje`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
