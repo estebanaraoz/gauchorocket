@@ -4,9 +4,12 @@ $id_usuario=$_SESSION['id_usuario'];
 
 $nivel=rand(1,3);
 
-$id_hospital=$_GET['idHospital'];
+$id_turno=$_GET['idTurno'];
 
-$sql ="insert into pasajero(id_usuario,id_estado_fisico,id_hospital)values('$id_usuario','$nivel','$id_hospital');";
+$sql ="UPDATE turno_hospital SET turnos = (turnos-1) WHERE id_turno = ".$id_turno.";";
+mysqli_query($conn,$sql);
+
+$sql ="insert into pasajero(id_usuario,id_estado_fisico,id_turno)values('$id_usuario','$nivel','$id_turno');";
 
 $resultado= mysqli_query($conn,$sql);
 

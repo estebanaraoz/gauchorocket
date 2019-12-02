@@ -9,14 +9,14 @@
 
     <?php
 
-    $hospitals=mostrarHospital($_GET['idHospital']);
+    $hospitals=mostrarHospital($_GET['idTurno'], $_GET['fecha']);
     foreach($hospitals as $hospital){
     echo" <tr>
 
                 <td>". $hospital['nombre']."</td>
                 <td>". $hospital['turnos']."</td>
-                <td><input class=\"form-control\" type='date' name='fecha_turno' step='1'  value='".date("Y-m-d")."'></td>
-                <td><a href='hospital_sacar_turno?idHospital=".$hospital['id_hospital'] ."'>Sacar turno</a></td>
+                <td>". $hospital['fecha']."</td>
+                <td><a href=\"hospital_sacar_turno?idTurno=".$hospital['id_turno']."\">Sacar turno</a></td>
         </tr>";
     }
     ?>
