@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3307
--- Tiempo de generación: 02-12-2019 a las 15:02:33
+-- Tiempo de generación: 02-12-2019 a las 17:15:49
 -- Versión del servidor: 10.4.8-MariaDB
 -- Versión de PHP: 7.3.10
 
@@ -81,6 +81,26 @@ INSERT INTO `estado_reserva` (`id_estado_reserva`, `estado`) VALUES
 (1, 'espera'),
 (2, 'confirmado'),
 (3, 'cancelado');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `hospital`
+--
+
+CREATE TABLE `hospital` (
+  `id_hospital` int(11) NOT NULL,
+  `nombre` varchar(30) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `hospital`
+--
+
+INSERT INTO `hospital` (`id_hospital`, `nombre`) VALUES
+(1, 'Bueno Aires'),
+(2, 'Shanghai'),
+(3, 'Ankara');
 
 -- --------------------------------------------------------
 
@@ -181,15 +201,8 @@ INSERT INTO `nave_tiene_cabina` (`id_nave`, `id_cabina`, `cantidad_de_asientos_e
 CREATE TABLE `pasajero` (
   `id_usuario` int(11) NOT NULL,
   `id_estado_fisico` int(11) DEFAULT NULL,
-  `id_hospital` int(11) DEFAULT NULL
+  `id_turno` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `pasajero`
---
-
-INSERT INTO `pasajero` (`id_usuario`, `id_estado_fisico`, `id_hospital`) VALUES
-(7, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -282,19 +295,26 @@ INSERT INTO `tipo_viaje` (`id_tipo_viaje`, `nombre_tipo_viaje`) VALUES
 --
 
 CREATE TABLE `turno_hospital` (
+  `id_turno` int(11) NOT NULL,
   `id_hospital` int(11) NOT NULL,
-  `nombre_hospital` varchar(35) DEFAULT NULL,
-  `turnos` int(11) DEFAULT NULL
+  `turnos` int(11) DEFAULT NULL,
+  `fecha` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `turno_hospital`
 --
 
-INSERT INTO `turno_hospital` (`id_hospital`, `nombre_hospital`, `turnos`) VALUES
-(1, 'Buenos Aires', 300),
-(2, 'Shangai', 210),
-(3, 'Ankara', 200);
+INSERT INTO `turno_hospital` (`id_turno`, `id_hospital`, `turnos`, `fecha`) VALUES
+(1, 1, 300, '2019-12-04'),
+(2, 2, 210, '2019-12-04'),
+(3, 3, 200, '2019-12-04'),
+(4, 1, 300, '2019-12-05'),
+(5, 2, 210, '2019-12-05'),
+(6, 3, 200, '2019-12-05'),
+(7, 1, 300, '2019-12-06'),
+(8, 2, 210, '2019-12-06'),
+(9, 3, 200, '2019-12-06');
 
 -- --------------------------------------------------------
 
@@ -427,6 +447,12 @@ ALTER TABLE `estado_reserva`
   ADD PRIMARY KEY (`id_estado_reserva`);
 
 --
+-- Indices de la tabla `hospital`
+--
+ALTER TABLE `hospital`
+  ADD PRIMARY KEY (`id_hospital`) USING BTREE;
+
+--
 -- Indices de la tabla `lugar`
 --
 ALTER TABLE `lugar`
@@ -452,7 +478,7 @@ ALTER TABLE `pasajero`
   ADD PRIMARY KEY (`id_usuario`),
   ADD KEY `id_usuario` (`id_usuario`),
   ADD KEY `id_estado_fisico` (`id_estado_fisico`),
-  ADD KEY `id_hospital` (`id_hospital`);
+  ADD KEY `fk_id_turno_pasajero` (`id_turno`);
 
 --
 -- Indices de la tabla `reserva`
@@ -485,7 +511,8 @@ ALTER TABLE `tipo_viaje`
 -- Indices de la tabla `turno_hospital`
 --
 ALTER TABLE `turno_hospital`
-  ADD PRIMARY KEY (`id_hospital`);
+  ADD PRIMARY KEY (`id_turno`),
+  ADD KEY `fk_id_hospital_turno` (`id_hospital`);
 
 --
 -- Indices de la tabla `usuario`
@@ -568,9 +595,10 @@ ALTER TABLE `nave_tiene_cabina`
 -- Filtros para la tabla `pasajero`
 --
 ALTER TABLE `pasajero`
+  ADD CONSTRAINT `fk_id_turno_pasajero` FOREIGN KEY (`id_turno`) REFERENCES `turno_hospital` (`id_turno`),
   ADD CONSTRAINT `pasajero_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
   ADD CONSTRAINT `pasajero_ibfk_2` FOREIGN KEY (`id_estado_fisico`) REFERENCES `estado_fisico` (`id_estado_fisico`),
-  ADD CONSTRAINT `pasajero_ibfk_3` FOREIGN KEY (`id_hospital`) REFERENCES `turno_hospital` (`id_hospital`);
+  ADD CONSTRAINT `pasajero_ibfk_3` FOREIGN KEY (`id_turno`) REFERENCES `turno_hospital` (`id_turno`);
 
 --
 -- Filtros para la tabla `reserva`
@@ -579,6 +607,12 @@ ALTER TABLE `reserva`
   ADD CONSTRAINT `reserva_ibfk_1` FOREIGN KEY (`id_estado_reserva`) REFERENCES `estado_reserva` (`id_estado_reserva`),
   ADD CONSTRAINT `reserva_ibfk_2` FOREIGN KEY (`cod_cabina`) REFERENCES `cabina` (`id_cabina`),
   ADD CONSTRAINT `reserva_ibfk_3` FOREIGN KEY (`cod_servicio`) REFERENCES `servicio` (`id_servicio`);
+
+--
+-- Filtros para la tabla `turno_hospital`
+--
+ALTER TABLE `turno_hospital`
+  ADD CONSTRAINT `fk_id_hospital_turno` FOREIGN KEY (`id_hospital`) REFERENCES `hospital` (`id_hospital`);
 
 --
 -- Filtros para la tabla `usuario`
