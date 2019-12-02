@@ -21,8 +21,8 @@ if(isset($_POST['registrarse'])){
             $query = "insert into usuario(nombre,contrasena,email,id_tipo_usuario) values (\"$user\",\"$password\",\"$email\",2);"
             or die(mysqli_errno);
             $resultado = mysqli_query($conn,$query);
-            if(mysqli_num_rows($resultUser) ==0){
-                echo "Usuario registrado exitosamente.
+            if($resultado){
+                echo "Usuario registrado exitosamente. Esta pagina se actualizara.
                 <script>
                 <!--
                 function timedRefresh(timeoutPeriod) {

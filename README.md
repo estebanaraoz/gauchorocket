@@ -1,6 +1,6 @@
-# gauchorocket
+# Gauchorocket
 
-Alumnos
-	Araoz Esteban
-	Fidalgo Alexei
-	Zapata Leonel
+**Alumnos**
+	-Araoz Esteban
+	-Fidalgo Alexei
+	-Zapata Leonel

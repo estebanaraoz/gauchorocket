@@ -1,6 +1,6 @@
 <?php
 if (isset($_SESSION["id_usuario"])){
-    echo "Ya has iniciado sesion.
+    echo "Ya has iniciado sesion. Esta pagina se actualizara.
             <script>
             <!--
             function timedRefresh(timeoutPeriod) {
