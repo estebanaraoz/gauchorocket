@@ -5,10 +5,10 @@ $nombreModulo = extraerNombreDeModulo($routes);
 $nombreAccion = extraerNombreDeAccion($routes);
 $_GET = extractGetParams();
 
-include_once($_SERVER["DOCUMENT_ROOT"]."/public/header.php");
+include_once("public/header.php");
 
 
-$filename = $_SERVER["DOCUMENT_ROOT"]."/controlador/controlador_" . $nombreModulo . ".php";
+$filename = "controlador/controlador_" . $nombreModulo . ".php";
 if( file_exists($filename) ){
 
     include_once($filename);
@@ -25,7 +25,7 @@ if( file_exists($filename) ){
     echo ' <div class="w3-container w3-content w3-center w3-padding-64" >La pagina solicitada no existe</div>';
 }
 
-include_once($_SERVER["DOCUMENT_ROOT"]."/public/footer.php");
+include_once("public/footer.php");
 
 
 function parseRoutes(){
@@ -38,15 +38,15 @@ function extraerNombreDeModulo($routes){
 }
 
 function extraerNombreDeAccion($routes){
-    return !empty($routes[2]) ? $routes[2] : "index";
+    return !empty($routes[2]) ? $routes[2] : "";
 }
 
 function extraerTipoAccion($routes){
-    return !empty($routes[3]) ? $routes[3] : "index";
+    return !empty($routes[3]) ? $routes[3] : "";
 }
 
 function extraerValorAccion($routes){
-    return !empty($routes[4]) ? $routes[4] : "index";
+    return !empty($routes[4]) ? $routes[4] : "";
 }
 
 function extractGetParams() {

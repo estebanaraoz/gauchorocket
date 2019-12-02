@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <meta charset="UTF-8">
@@ -21,35 +24,35 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link" href="/">Inicio</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="registro">Crear cuenta</a>
+<?php
+    if (isset($_SESSION["id_usuario"])){
+        echo "
+        
+      <li class=\"nav-item\">
+        <a class=\"nav-link\" href=\"salir\">Cerrar sesión</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="login">Iniciar sesión</a>
+        
+        ";
+    } else {
+        echo "
+        
+      <li class=\"nav-item\">
+        <a class=\"nav-link\" href=\"registro\">Crear cuenta</a>
       </li>
+      <li class=\"nav-item\">
+        <a class=\"nav-link\" href=\"login\">Iniciar sesión</a>
+      </li>
+        
+        ";
+    }
+
+?>
       <li class="nav-item">
         <a class="nav-link" href="busqueda">Buscar</a>
       </li>
     </ul>
   </div>
 </nav>
-
-<!-- <div class="w3-top">
-    <ul class="nav">
-        <li class="nav-item">
-            <a class="nav-link" href="registro">Crear cuenta</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="login">Ingresar</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="viajes/buscar/id/1">Buscar</a>
-        </li>
-    </ul>
-</div> -->
-
-<!-- Page content -->
-<!-- <div class="w3-content" style="max-width:2000px;margin-top:46px"> -->
     <div class="container">
