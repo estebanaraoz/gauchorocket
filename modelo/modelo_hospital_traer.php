@@ -3,7 +3,11 @@
 function getHospital(){
 //Realiza conexion con la base de datos.
     $conn = getConexion();
-    $sql="select * from turno_hospital;";
+    $sql="
+        SELECT th.id_turno as id_turno, hos.nombre as nombre, th.turnos as turnos, th.fecha as fecha
+        FROM `turno_hospital` as th
+        INNER JOIN hospital as hos on hos.id_hospital = th.id_hospital
+    ";
 
     $result= mysqli_query($conn,$sql) or die("Error al consultar los turnos de hospitales.");
 
@@ -12,10 +16,10 @@ function getHospital(){
 
         while($row = mysqli_fetch_assoc($result)) {
 
-            $hospital['id_hospital'] =  $row["id_hospital"];
-            $hospital['nombre'] =  $row["nombre_hospital"];
+            $hospital['id_turno'] =  $row["id_turno"];
+            $hospital['nombre'] =  $row["nombre"];
             $hospital['turnos'] =  $row["turnos"];
-            //$hospital['imagen'] = $row["Imagen"];
+            $hospital['fecha'] = $row["fecha"];
             $hospitales[] = $hospital;
 
         }

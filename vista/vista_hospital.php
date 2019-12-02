@@ -4,6 +4,7 @@
     <tr>
         <th>Hospital</th>
         <th>Turnos</th>
+        <th>Fecha</th>
     </tr>
     <?php
 
@@ -12,7 +13,8 @@
     echo" <tr>
                 <td>". $hospital['nombre']."</td>
                 <td>". $hospital['turnos']."</td>
-                <td><a href='hospital_seleccionado?idHospital=". $hospital['id_hospital']."'>Mostrar</a></td>
+                <td>". $hospital['fecha']."</td>
+                <td><a href=\"hospital_seleccionado?idTurno=".$hospital['id_turno']."&fecha=".$hospital['fecha']."\">Mostrar</a></td>
         </tr>";
     }
     ?>

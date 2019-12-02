@@ -5,11 +5,12 @@ $conn = getConexion();
 if (isset($_SESSION["id_usuario"])){
 
     $sql = "
-        SELECT tv.nombre_tipo_viaje as tipo_viaje, th.nombre_hospital as nombre_hospital 
+        SELECT tv.nombre_tipo_viaje as tipo_viaje, hos.nombre as nombre_hospital 
         FROM pasajero as pas 
         INNER JOIN estado_fisico as ef on ef.id_estado_fisico = pas.id_estado_fisico
         INNER JOIN tipo_viaje as tv on tv.id_tipo_viaje = ef.id_tipo_viaje
-        INNER JOIN turno_hospital as th on th.id_hospital = pas.id_hospital
+        INNER JOIN turno_hospital as th on th.id_turno = pas.id_turno
+        INNER JOIN hospital as hos on hos.id_hospital = th.id_hospital
         WHERE pas.id_usuario = ".$_SESSION["id_usuario"].";
     ";
 

@@ -1,8 +1,13 @@
 <?php
 
-function mostrarHospital($cod){
+function mostrarHospital($cod, $fec){
     $conn = getConexion();
-    $sql="select * from turno_hospital where id_hospital='$cod';";
+    $sql="
+        SELECT th.id_turno as id_turno, hos.nombre as nombre, th.turnos as turnos, th.fecha as fecha
+        FROM `turno_hospital` as th
+        INNER JOIN hospital as hos on hos.id_hospital = th.id_hospital
+        WHERE th.id_turno = ".$cod." AND fecha = \"".$fec."\"
+    ";
 
     $res=mysqli_query($conn,$sql);
     $hospitals = Array();
@@ -10,9 +15,10 @@ function mostrarHospital($cod){
 
         while($row = mysqli_fetch_assoc($res)) {
 
-            $hospital['id_hospital'] =  $row["id_hospital"];
-            $hospital['nombre'] =  $row["nombre_hospital"];
+            $hospital['id_turno'] =  $row["id_turno"];
+            $hospital['nombre'] =  $row["nombre"];
             $hospital['turnos'] =  $row["turnos"];
+            $hospital['fecha'] =  $row["fecha"];
             $hospitals[] = $hospital;
         }
 
