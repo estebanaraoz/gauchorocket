@@ -33,6 +33,9 @@ session_start();
         <a class=\"nav-link\" href=\"hospital_ver\">Turno Medico</a>
       </li>
       <li class=\"nav-item\">
+        <a class=\"nav-link\" href=\"ver_reservas\">Reservas</a>
+      </li>
+      <li class=\"nav-item\">
         <a class=\"nav-link\" href=\"salir\">Cerrar Sesión</a>
       </li>
         

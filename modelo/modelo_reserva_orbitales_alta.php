@@ -8,7 +8,6 @@
 
     $conn=getConexion();
 
-    $existenErrores = false;
 	$idPasajeros = array();
 	$mensajesError = array();
 	$comentarios = array();
