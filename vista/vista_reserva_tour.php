@@ -1,5 +1,5 @@
 <br><br>
-<h2>Reserva Trayecto</h2>
+<h2>Reserva Tour</h2>
 <table class="w3-table">
     <tr>
         <th>TIPO DE VIAJE</th>
@@ -34,7 +34,7 @@ else{
 }
 ?>
 </table>
-<form class="" action="reserva_trayectos_confirmar" method="POST">
+<form class="" action="reserva_tour_confirmar" method="POST">
     <div class="row">
         <div class="col">
             </br>
