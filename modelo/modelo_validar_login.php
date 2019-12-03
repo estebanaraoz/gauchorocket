@@ -16,6 +16,8 @@ if(isset($_POST['login'])){
     if (mysqli_num_rows($result) > 0) {
         while($row = mysqli_fetch_assoc($result)) {
             $_SESSION["id_usuario"] = $row["id_usuario"];
+            $_SESSION["email_usuario"] = $row["email"];
+            $_SESSION["nombre_usuario"] = $row["nombre"];
         }
 
         echo "Te has logueado. Esta pagina se actualizara.

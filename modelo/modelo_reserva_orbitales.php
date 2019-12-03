@@ -36,7 +36,7 @@
 
     function calcularFechaVencimiento($idViaje){
         $conn = getConexion();
-        $sql="select (salida_viaje - interval 2 hour) as fecha from viaje where id_viaje=$idViaje;";
+        $sql="select (salida_viaje - interval 2 day) as fecha from viaje where id_viaje=$idViaje;";
         $fecha = "";
 
         $resultado = mysqli_query($conn,$sql);

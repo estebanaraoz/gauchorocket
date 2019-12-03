@@ -1,3 +1,6 @@
+CREATE DATABASE gaucho_rocket;
+USE gaucho_rocket;
+
 -- phpMyAdmin SQL Dump
 -- version 4.6.5.2
 -- https://www.phpmyadmin.net/
@@ -68,7 +71,7 @@ INSERT INTO `estado_fisico` (`id_estado_fisico`, `id_tipo_viaje`) VALUES
 
 CREATE TABLE `estado_reserva` (
   `id_estado_reserva` int(11) NOT NULL,
-  `estado` varchar(15) DEFAULT NULL
+  `estado` varchar(25) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -76,9 +79,12 @@ CREATE TABLE `estado_reserva` (
 --
 
 INSERT INTO `estado_reserva` (`id_estado_reserva`, `estado`) VALUES
-(1, 'Espera'),
-(2, 'Confirmado'),
-(3, 'Cancelado');
+(1, 'Falta Codigo medico '),
+(2, 'Falta pago'),
+(3, 'Falta Check-in'),
+(4, 'Listo para viajar'),
+(5, 'Vencida'),
+(6, 'En lista de espera');
 
 -- --------------------------------------------------------
 

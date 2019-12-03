@@ -1,84 +1,117 @@
 <?php
-$idViaje=$_POST['idViaje'];
-$idCabina=$_POST['cabina'];
-$idServicio=$_POST['servicio'];
-$fecha=$_POST['fecha_vencimiento'];
-$cantAcompanantes=$_POST['cantAcompanantes'];
-$idUsuario=$_SESSION['id_usuario'];
+    $idViaje=$_POST['idViaje'];
+    $idCabina=$_POST['cabina'];
+    $idServicio=$_POST['servicio'];
+    $fecha=$_POST['fecha_vencimiento'];
+    $cantAcompanantes=$_POST['cantAcompanantes'];
+    $idUsuario=$_SESSION['id_usuario'];
 
-
-echo "ID VIAJE".$idViaje;
-echo "</br>";
-echo "ID CABINA".$idCabina;
-echo "</br>";
-echo "ID SERVICIO".$idServicio;
-echo "</br>";
-echo "FECHA VENCIMIENTO".$fecha;
-echo "</br>";
-echo "CANTIDAD DE ACOMPANANTES".$cantAcompanantes;
-echo "</br>";
-echo "ID USUARIO".$idUsuario;
-
-$conn=getConexion();
+    $conn=getConexion();
 
     $existenErrores = false;
-    $isAcompanantesValidos = true;
-	$idAcompanantes[] = null;
-	$idReserva = 12;
+	$idPasajeros = array();
+	$mensajesError = array();
+	$comentarios = array();
+	$id_estado_reserva = 2;
+
+    //AGREGAMOS EL USUARIO QUE HACE LA RESERVA, AL ARRAY DE PASAJEROS.
+    array_unshift($idPasajeros, $idUsuario);
+
+    /*
+     * CONTROL ESTADO FISICO USUARIO
+     * */
+    $sql = "
+                SELECT id_estado_fisico
+                FROM pasajero
+                WHERE id_usuario = $idUsuario
+            ";
+    $result = mysqli_query($conn, $sql) or die ("Error al consultar el estado fisico del usuario.");
+    if (mysqli_fetch_array($result) == 0) {
+        $id_estado_reserva = 1;
+        array_unshift($comentarios,"El pasajero ".$_SESSION["nombre_usuario"]." no ha realizado la revision medica.");
+    }
+
+    /*
+     * REVISION DE TODOS LOS ACOMPANANTES
+     * */
     for ($i = 1; $i-1 < $cantAcompanantes; $i++) {
-        echo "</br>Mail acompanante ".$i." ".$_POST["acompanante".$i];
         $sql = "
-            SELECT *
-            FROM usuario
+            SELECT usu.id_usuario, usu.nombre, usu.email, pas.id_estado_fisico
+            FROM usuario usu
+            LEFT JOIN pasajero pas ON pas.id_usuario = usu.id_usuario
             WHERE email = \"".$_POST["acompanante".$i]."\" 
         ";
 
         $result = mysqli_query($conn,$sql);
-        if (mysqli_fetch_array($result) > 0){
+        if (mysqli_fetch_array($result) > 0){//CONTROL DE ACOMPANANTES
 			foreach($result as $row){
-				$idAcompanantes[$i] = $row["id_usuario"];
-			}
+                if ($row["email"] == $_SESSION["email_usuario"]){//CONTROL MAIL ACOMPANANTE DISTINTO A MAIL USUARIO LOGEADO
+                    array_push($mensajesError, "El mail ".$row["email"]." es el mismo del usuario logeado.");
+                }
+
+                if (empty($row["id_estado_fisico"])){//ESTADO FISICO DEL USUARIO ACOMPANANTE
+                    $id_estado_reserva = 1;
+                    array_push($comentarios,"El pasajero ".$row["nombre"]." no ha realizado la revision medica.");
+                }
+
+                array_push($idPasajeros, $row["id_usuario"]);
+            }
         } else {
-            $isAcompanantesValidos = false;
-		}
+            array_push($mensajesError, "El mail ".$_POST["acompanante".$i]." no esta asignado a un usuario.");
+        }
     }
 
-	if (!$isAcompanantesValidos){$existenErrores = true;}
-	
-    if ($existenErrores){
-        echo "</br>Existen errores</br>
-                <button class=\"btn btn-primary\" onclick=\"goBack()\">Regresar</button>
-                
-                <script>
-                function goBack() {
-                  window.history.back();
-                }
-                </script>        
-        ";
-    } else {
+    /*
+     * REVISION DE DISPONIBILIDAD
+     * */
+    $sql = "
+        SELECT asientos_disponibles disponibilidad
+        FROM viaje_nave_cabina 
+        WHERE id_viaje = $idViaje AND id_cabina = $idCabina
+    ";
+    $result = mysqli_query($conn, $sql) or die ("Error al consultar la disponibilidad de la cabina.");
+    foreach ($result as $row) {
+        if ($row["disponibilidad"] < $cantAcompanantes + 1){
+            $id_estado_reserva = 6;
+            array_push($comentarios, "Se registra la reserva en lista de espera debido a que no hay la suficiente disponibilidad en la cabina deseada. Disponibilidad existente: ".$row["disponibilidad"]." pasajeros.");
+        }
+    }
+
+    /*
+     * COMPROBACION DE ERRORES
+     * */
+    if (sizeof($mensajesError) == 0){
+        /*
+         * ALTA DE RESERVA
+         * */
 		$sql = "
-			INSERT INTO reserva (id_viaje, vencimiento_reserva, id_estado_reserva, cod_cabina, cod_servicio, valor)
-			VALUES ($idViaje, \"$fecha\", 1, $idCabina, $idServicio, 100)
+			INSERT INTO reserva (id_viaje, vencimiento_reserva, id_estado_reserva, cod_cabina, cod_servicio)
+			VALUES ($idViaje, \"$fecha\", $id_estado_reserva, $idCabina, $idServicio)
 		";
-		//echo $sql;
+		//Alta Reserva
 		mysqli_query($conn, $sql) or die ("Error al realizar la reserva.");
 		$idReserva = mysqli_insert_id($conn);
-		
-		$sql = "
-			INSERT INTO usuario_hace_reserva(id_reserva,id_usuario)
-			VALUE ($idReserva, $idUsuario)
-		";
-		mysqli_query($conn,$sql)or die("Error al asignar usuario a reserva.");
-		
-		for ($i = 1; $i-1 < $cantAcompanantes; $i++) {
-			//echo "</br>Mail acompanante ".$i." ".$_POST["acompanante".$i];
-			echo $idAcompanantes[$i];
-			
-			$sql = "
+
+        /*
+         * MODIFICACION DISPONIBILIDAD
+         * */
+        $sql ="
+            UPDATE viaje_nave_cabina 
+            SET asientos_disponibles = (asientos_disponibles-".($cantAcompanantes + 1).") 
+            WHERE id_viaje = $idViaje AND id_cabina = $idCabina
+        ";
+        mysqli_query($conn,$sql);
+
+        /*
+         * ASIGNACION DE USUARIOS A VIAJE
+         * */
+        foreach ($idPasajeros as $idPasajero) {
+            $sql = "
 				INSERT INTO usuario_hace_reserva
-				VALUES ($idReserva, $idAcompanantes[$i]) 
+				VALUES ($idReserva, $idPasajero) 
 			";
-			mysqli_query($conn,$sql)or die("Error al asignar el acompañante $idAcompanantes[$i] a la reserva. $sql");
-		}
+            //Alta asignacion acompa;antes a la reserva.
+            mysqli_query($conn,$sql)or die("Error al asignar el acompañante $idPasajero a la reserva. $sql");
+        }
 	}
 ?>

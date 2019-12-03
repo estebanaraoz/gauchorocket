@@ -80,7 +80,7 @@ else{
     <div class="row">
         <div class="col">
             <input type="button" type="submit" class="btn btn-primary" name="agregar_acompañante" onclick="agregarAcompanante()" value="Presione para agregar acompañantes">
-            <input name="insertar" type="submit" class="btn btn-primary" value="Continuar" >
+            <input name="insertar" type="submit" class="btn btn-primary" value="Confirmar" >
         </div>
     </div>
 </form>
