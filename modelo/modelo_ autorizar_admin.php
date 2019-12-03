@@ -36,7 +36,7 @@ if(isset($_POST['btselect'])){
             <td>" . $usuario['nombre'] . "</td>
             <td>" . $usuario['tipo'] . "</td>
             <td>" . $usuario['email'] . "</td>
-            <td><a href='controlador_autorizar_admin.php?user=". $usuario['idusuario'] . "&tipo=". $usuario['tipo'] ."'>check-in</a></td>	
+            <td><a href='controlador_autorizar_admin.php?user=". $usuario['idusuario'] . "&tipo=". $usuario['tipo'] ."'>cambiar</a></td>	
 			</tr>
 			</table>
 			";							
@@ -54,7 +54,7 @@ if(isset($_POST['btselect'])){
 				if ($tipo=='Administrador'){
 					
 				echo $user;
-				 $sql ="UPDATE `usuario` SET `id_tipo_usuario = 2 WHERE id_usuario='$user'";
+				 $sql ="UPDATE `usuario` SET `id_tipo_usuario` = 2 WHERE id_usuario='$user'";
 				mysqli_query($conn, $sql) or die("Error al cambiar2.");}
 				else {
 					
