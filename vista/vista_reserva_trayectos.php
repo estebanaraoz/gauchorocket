@@ -34,7 +34,7 @@ else{
 }
 ?>
 </table>
-<form class="" action="reserva_orbitales_confirmar" method="POST">
+<form class="" action="reserva_trayectos_confirmar" method="POST">
     <div class="row">
         <div class="col">
             </br>

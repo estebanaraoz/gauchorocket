@@ -1,5 +1,4 @@
 <?php
-
 $routes = parseRoutes();
 $nombreModulo = extraerNombreDeModulo($routes);
 $nombreAccion = extraerNombreDeAccion($routes);
@@ -7,21 +6,11 @@ $_GET = extractGetParams();
 
 include_once("public/header.php");
 
-
 $filename = "controlador/controlador_" . $nombreModulo . ".php";
 //echo $filename;
 if( file_exists($filename) ){
 
     include_once($filename);
-    /*if ( $nombreModulo == 'viajes' && $nombreAccion == 'buscar'){
-
-        $tipoAccion = extraerTipoAccion($routes);
-        $busqueda = extraerValorAccion($routes);
-
-        if ( $tipoAccion == 'id'){
-            viajes_buscarPorId($busqueda);
-        }
-    }*/
 } else {
     echo ' <div class="w3-container w3-content w3-center w3-padding-64" >La pagina solicitada no existe</div>';
 }

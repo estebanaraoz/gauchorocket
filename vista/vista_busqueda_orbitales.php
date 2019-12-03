@@ -6,6 +6,7 @@
       <label for="origen">Selecciona Origen</label>
       <br>
       <select class="custom-select" name="origen">
+          <option></option>
         <?php
         $lugares = getLugaresOrbitales();
           foreach ($lugares as $lugar) {

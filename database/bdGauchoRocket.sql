@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3307
--- Tiempo de generación: 03-12-2019 a las 15:42:51
+-- Tiempo de generación: 03-12-2019 a las 18:31:50
 -- Versión del servidor: 10.4.8-MariaDB
 -- Versión de PHP: 7.3.10
 
@@ -114,7 +114,7 @@ INSERT INTO `hospital` (`id_hospital`, `nombre`) VALUES
 
 CREATE TABLE `lugar` (
   `id_lugar` int(11) NOT NULL,
-  `nombre_lugar` varchar(20) DEFAULT NULL
+  `nombre_lugar` varchar(32) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -124,8 +124,8 @@ CREATE TABLE `lugar` (
 INSERT INTO `lugar` (`id_lugar`, `nombre_lugar`) VALUES
 (1, 'Buenos Aires'),
 (2, 'Ankara'),
-(3, 'Estación Espacial In'),
-(4, 'OrbiterHotel'),
+(3, 'Estación Espacial Internacional'),
+(4, 'OrbitelHotel'),
 (5, 'Luna'),
 (6, 'Marte'),
 (7, 'Ganimedes'),
@@ -154,14 +154,14 @@ CREATE TABLE `nave` (
 INSERT INTO `nave` (`id_nave`, `id_tipo_viaje`, `nombre`, `matricula`) VALUES
 (1, 1, 'Calandria', '01'),
 (2, 1, 'Colibri', '03'),
-(3, 2, 'Zorzal', ''),
+(3, 2, 'Zorzal', 'BA1'),
 (4, 2, 'Carancho', ''),
 (5, 2, 'Aguilucho', ''),
 (6, 2, 'Canario', ''),
 (7, 3, 'Aguila', ''),
 (8, 3, 'Condor', ''),
 (9, 3, 'Halcon', ''),
-(10, 3, 'Guanaco', ''),
+(10, 3, 'Guanaco', 'AA4'),
 (11, 1, 'Calandria', 'O2'),
 (12, 1, 'Calandria', 'O6'),
 (13, 1, 'Calandria', 'O7'),
@@ -212,7 +212,13 @@ CREATE TABLE `reserva` (
 INSERT INTO `reserva` (`id_reserva`, `id_viaje`, `vencimiento_reserva`, `id_estado_reserva`, `cod_cabina`, `cod_servicio`) VALUES
 (58, 1, '2019-12-06 00:00:00', 2, 1, 1),
 (59, 1, '2019-12-06 00:00:00', 1, 2, 3),
-(60, 1, '2019-12-06 00:00:00', 6, 2, 3);
+(60, 1, '2019-12-06 00:00:00', 6, 2, 3),
+(61, 6, '2019-12-06 00:00:00', 2, 3, 2),
+(62, 6, '2019-12-06 00:00:00', 2, 3, 2),
+(63, 1, '2019-12-06 00:00:00', 2, 1, 1),
+(64, 1, '2019-12-06 00:00:00', 6, 1, 1),
+(65, 10, '2019-12-06 00:00:00', 6, 1, 1),
+(66, 6, '2019-12-06 00:00:00', 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -272,7 +278,8 @@ CREATE TABLE `tipo_viaje` (
 INSERT INTO `tipo_viaje` (`id_tipo_viaje`, `nombre_tipo_viaje`) VALUES
 (1, 'Orbital'),
 (2, 'Baja aceleracion'),
-(3, 'Alta aceleracion');
+(3, 'Alta aceleracion'),
+(4, 'Tour');
 
 -- --------------------------------------------------------
 
@@ -350,7 +357,13 @@ INSERT INTO `usuario_hace_reserva` (`id_reserva`, `id_usuario`) VALUES
 (59, 3),
 (59, 6),
 (60, 3),
-(60, 6);
+(60, 6),
+(61, 6),
+(62, 6),
+(63, 6),
+(64, 6),
+(65, 6),
+(66, 6);
 
 -- --------------------------------------------------------
 
@@ -378,7 +391,18 @@ INSERT INTO `viaje` (`id_viaje`, `salida_viaje`, `llegada_viaje`, `duracion`, `p
 (2, '2019-12-08 02:00:00', NULL, '08:00:00', 10000, 1, 1, 1),
 (3, '2019-12-08 04:00:00', NULL, '08:00:00', 10000, 1, 1, 1),
 (4, '2019-12-08 06:00:00', NULL, '08:00:00', 15000, 1, 2, 2),
-(5, '2019-12-08 08:00:00', NULL, '08:00:00', 15000, 1, 2, 2);
+(5, '2019-12-08 08:00:00', NULL, '08:00:00', 15000, 1, 2, 2),
+(6, '2019-12-08 00:00:00', NULL, '04:00:00', 3000, 2, 3, 1),
+(7, '2019-12-08 04:00:00', NULL, '01:00:00', 4000, 2, 4, 3),
+(8, '2019-12-08 05:00:00', NULL, '16:00:00', 6000, 2, 5, 4),
+(9, '2019-12-08 21:00:00', NULL, '26:00:00', 10000, 2, 6, 5),
+(10, '2019-12-08 00:00:00', NULL, '03:00:00', 5000, 3, 3, 2),
+(11, '2019-12-08 03:00:00', NULL, '10:00:00', 8000, 3, 5, 3),
+(12, '2019-12-08 13:00:00', NULL, '32:00:00', 18000, 3, 7, 5),
+(13, '2019-12-09 21:00:00', NULL, '33:00:00', 20000, 3, 8, 7),
+(14, '2019-12-11 06:00:00', NULL, '35:00:00', 22000, 3, 9, 8),
+(15, '2019-12-12 17:00:00', NULL, '50:00:00', 30000, 3, 10, 9),
+(16, '2019-12-14 19:00:00', NULL, '52:00:00', 33000, 3, 11, 10);
 
 -- --------------------------------------------------------
 
@@ -398,8 +422,8 @@ CREATE TABLE `viaje_nave_cabina` (
 --
 
 INSERT INTO `viaje_nave_cabina` (`id_viaje`, `id_nave`, `id_cabina`, `asientos_disponibles`) VALUES
-(1, 1, 1, 1),
-(1, 1, 2, -2),
+(1, 1, 1, -1),
+(1, 1, 2, 10),
 (1, 1, 3, 10),
 (2, 12, 1, 200),
 (2, 12, 2, 75),
@@ -412,7 +436,40 @@ INSERT INTO `viaje_nave_cabina` (`id_viaje`, `id_nave`, `id_cabina`, `asientos_d
 (4, 2, 3, 2),
 (5, 15, 1, 100),
 (5, 15, 2, 18),
-(5, 15, 3, 2);
+(5, 15, 3, 2),
+(6, 3, 1, 49),
+(6, 3, 2, 0),
+(6, 3, 3, 48),
+(7, 3, 1, 50),
+(7, 3, 2, 0),
+(7, 3, 3, 50),
+(8, 3, 1, 50),
+(8, 3, 2, 0),
+(8, 3, 3, 50),
+(9, 3, 1, 50),
+(9, 3, 2, 0),
+(9, 3, 3, 50),
+(10, 10, 1, -1),
+(10, 10, 2, 0),
+(10, 10, 3, 100),
+(11, 10, 1, 0),
+(11, 10, 2, 0),
+(11, 10, 3, 100),
+(12, 10, 1, 0),
+(12, 10, 2, 0),
+(12, 10, 3, 100),
+(13, 10, 1, 0),
+(13, 10, 2, 0),
+(13, 10, 3, 100),
+(14, 10, 1, 0),
+(14, 10, 2, 0),
+(14, 10, 3, 100),
+(15, 10, 1, 0),
+(15, 10, 2, 0),
+(15, 10, 3, 100),
+(16, 10, 1, 0),
+(16, 10, 2, 0),
+(16, 10, 3, 100);
 
 -- --------------------------------------------------------
 
@@ -569,7 +626,7 @@ ALTER TABLE `viaje_puede_ser_hecho_por`
 -- AUTO_INCREMENT de la tabla `reserva`
 --
 ALTER TABLE `reserva`
-  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
@@ -581,7 +638,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `usuario_hace_reserva`
 --
 ALTER TABLE `usuario_hace_reserva`
-  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- Restricciones para tablas volcadas
