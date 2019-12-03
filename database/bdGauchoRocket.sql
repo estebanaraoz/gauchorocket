@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3307
--- Tiempo de generación: 03-12-2019 a las 18:31:50
+-- Tiempo de generación: 03-12-2019 a las 19:12:43
 -- Versión del servidor: 10.4.8-MariaDB
 -- Versión de PHP: 7.3.10
 
@@ -169,7 +169,8 @@ INSERT INTO `nave` (`id_nave`, `id_tipo_viaje`, `nombre`, `matricula`) VALUES
 (15, 1, 'Colibri', 'O4'),
 (16, 1, 'Colibri', 'O5'),
 (17, 1, 'Colibri', 'O8'),
-(18, 1, 'Colibri', 'O9');
+(18, 1, 'Colibri', 'O9'),
+(19, 4, 'Guanaco', 'AA8');
 
 -- --------------------------------------------------------
 
@@ -188,7 +189,7 @@ CREATE TABLE `pasajero` (
 --
 
 INSERT INTO `pasajero` (`id_usuario`, `id_estado_fisico`, `id_turno`) VALUES
-(6, 2, 1);
+(6, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -218,7 +219,10 @@ INSERT INTO `reserva` (`id_reserva`, `id_viaje`, `vencimiento_reserva`, `id_esta
 (63, 1, '2019-12-06 00:00:00', 2, 1, 1),
 (64, 1, '2019-12-06 00:00:00', 6, 1, 1),
 (65, 10, '2019-12-06 00:00:00', 6, 1, 1),
-(66, 6, '2019-12-06 00:00:00', 2, 1, 1);
+(66, 6, '2019-12-06 00:00:00', 2, 1, 1),
+(67, 17, '2019-12-06 00:00:00', 2, 1, 1),
+(68, 17, '2019-12-06 00:00:00', 2, 1, 1),
+(69, 17, '2019-12-06 00:00:00', 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -363,7 +367,10 @@ INSERT INTO `usuario_hace_reserva` (`id_reserva`, `id_usuario`) VALUES
 (63, 6),
 (64, 6),
 (65, 6),
-(66, 6);
+(66, 6),
+(67, 6),
+(68, 6),
+(69, 6);
 
 -- --------------------------------------------------------
 
@@ -402,7 +409,8 @@ INSERT INTO `viaje` (`id_viaje`, `salida_viaje`, `llegada_viaje`, `duracion`, `p
 (13, '2019-12-09 21:00:00', NULL, '33:00:00', 20000, 3, 8, 7),
 (14, '2019-12-11 06:00:00', NULL, '35:00:00', 22000, 3, 9, 8),
 (15, '2019-12-12 17:00:00', NULL, '50:00:00', 30000, 3, 10, 9),
-(16, '2019-12-14 19:00:00', NULL, '52:00:00', 33000, 3, 11, 10);
+(16, '2019-12-14 19:00:00', NULL, '52:00:00', 33000, 3, 11, 10),
+(17, '2019-12-08 00:00:00', NULL, '504:00:00', 80000, 4, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -469,7 +477,10 @@ INSERT INTO `viaje_nave_cabina` (`id_viaje`, `id_nave`, `id_cabina`, `asientos_d
 (15, 10, 3, 100),
 (16, 10, 1, 0),
 (16, 10, 2, 0),
-(16, 10, 3, 100);
+(16, 10, 3, 100),
+(17, 19, 1, 27),
+(17, 19, 2, 30),
+(17, 19, 3, 30);
 
 -- --------------------------------------------------------
 
@@ -492,7 +503,8 @@ INSERT INTO `viaje_puede_ser_hecho_por` (`id_estado_fisico`, `id_tipo_viaje`) VA
 (2, 2),
 (3, 1),
 (3, 2),
-(3, 3);
+(3, 3),
+(3, 4);
 
 --
 -- Índices para tablas volcadas
@@ -626,7 +638,7 @@ ALTER TABLE `viaje_puede_ser_hecho_por`
 -- AUTO_INCREMENT de la tabla `reserva`
 --
 ALTER TABLE `reserva`
-  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
@@ -638,7 +650,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `usuario_hace_reserva`
 --
 ALTER TABLE `usuario_hace_reserva`
-  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- Restricciones para tablas volcadas
