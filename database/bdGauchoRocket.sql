@@ -1,16 +1,15 @@
-CREATE DATABASE gaucho_rocket;
-USE gaucho_rocket;
-
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3307
--- Tiempo de generación: 03-12-2019 a las 00:40:13
--- Versión del servidor: 10.1.21-MariaDB
--- Versión de PHP: 7.1.1
+-- Tiempo de generación: 03-12-2019 a las 15:42:51
+-- Versión del servidor: 10.4.8-MariaDB
+-- Versión de PHP: 7.3.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -31,17 +30,18 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `cabina` (
   `id_cabina` int(11) NOT NULL,
-  `tipo_cabina` varchar(20) DEFAULT NULL
+  `tipo_cabina` varchar(20) DEFAULT NULL,
+  `precio` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `cabina`
 --
 
-INSERT INTO `cabina` (`id_cabina`, `tipo_cabina`) VALUES
-(1, 'General'),
-(2, 'Familiar'),
-(3, 'Suit');
+INSERT INTO `cabina` (`id_cabina`, `tipo_cabina`, `precio`) VALUES
+(1, 'General', 1500),
+(2, 'Familiar', 2700),
+(3, 'Suit', 4500);
 
 -- --------------------------------------------------------
 
@@ -183,6 +183,13 @@ CREATE TABLE `pasajero` (
   `id_turno` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `pasajero`
+--
+
+INSERT INTO `pasajero` (`id_usuario`, `id_estado_fisico`, `id_turno`) VALUES
+(6, 2, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -195,27 +202,17 @@ CREATE TABLE `reserva` (
   `vencimiento_reserva` datetime NOT NULL,
   `id_estado_reserva` int(11) DEFAULT NULL,
   `cod_cabina` int(11) NOT NULL,
-  `cod_servicio` int(11) NOT NULL,
-  `valor` int(10) NOT NULL
+  `cod_servicio` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `reserva`
 --
 
-INSERT INTO `reserva` (`id_reserva`, `id_viaje`, `vencimiento_reserva`, `id_estado_reserva`, `cod_cabina`, `cod_servicio`, `valor`) VALUES
-(1, 1, '0000-00-00 00:00:00', 2, 3, 1, 0),
-(2, 1, '0000-00-00 00:00:00', 2, 3, 1, 0),
-(3, 1, '0000-00-00 00:00:00', 2, 3, 1, 0),
-(4, 1, '0000-00-00 00:00:00', 2, 3, 1, 0),
-(5, 1, '0000-00-00 00:00:00', 2, 3, 1, 0),
-(6, 3, '2019-12-08 02:00:00', 1, 2, 2, 100),
-(7, 3, '2019-12-08 02:00:00', 1, 2, 2, 100),
-(8, 3, '2019-12-08 02:00:00', 1, 2, 2, 100),
-(9, 3, '2019-12-08 02:00:00', 1, 2, 2, 100),
-(10, 3, '2019-12-08 02:00:00', 1, 2, 2, 100),
-(11, 3, '2019-12-08 02:00:00', 1, 2, 2, 100),
-(12, 3, '2019-12-08 02:00:00', 1, 2, 2, 100);
+INSERT INTO `reserva` (`id_reserva`, `id_viaje`, `vencimiento_reserva`, `id_estado_reserva`, `cod_cabina`, `cod_servicio`) VALUES
+(58, 1, '2019-12-06 00:00:00', 2, 1, 1),
+(59, 1, '2019-12-06 00:00:00', 1, 2, 3),
+(60, 1, '2019-12-06 00:00:00', 6, 2, 3);
 
 -- --------------------------------------------------------
 
@@ -225,17 +222,18 @@ INSERT INTO `reserva` (`id_reserva`, `id_viaje`, `vencimiento_reserva`, `id_esta
 
 CREATE TABLE `servicio` (
   `id_servicio` int(11) NOT NULL,
-  `tipo_servicio` varchar(20) DEFAULT NULL
+  `tipo_servicio` varchar(20) DEFAULT NULL,
+  `precio` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `servicio`
 --
 
-INSERT INTO `servicio` (`id_servicio`, `tipo_servicio`) VALUES
-(1, 'Standar'),
-(2, 'Gourmet'),
-(3, 'Spa');
+INSERT INTO `servicio` (`id_servicio`, `tipo_servicio`, `precio`) VALUES
+(1, 'Standar', 400),
+(2, 'Gourmet', 1000),
+(3, 'Spa', 1400);
 
 -- --------------------------------------------------------
 
@@ -294,7 +292,7 @@ CREATE TABLE `turno_hospital` (
 --
 
 INSERT INTO `turno_hospital` (`id_turno`, `id_hospital`, `turnos`, `fecha`) VALUES
-(1, 1, 300, '2019-12-04'),
+(1, 1, 299, '2019-12-04'),
 (2, 2, 210, '2019-12-04'),
 (3, 3, 200, '2019-12-04'),
 (4, 1, 300, '2019-12-05'),
@@ -348,8 +346,11 @@ CREATE TABLE `usuario_hace_reserva` (
 --
 
 INSERT INTO `usuario_hace_reserva` (`id_reserva`, `id_usuario`) VALUES
-(12, 1),
-(12, 3);
+(58, 6),
+(59, 3),
+(59, 6),
+(60, 3),
+(60, 6);
 
 -- --------------------------------------------------------
 
@@ -397,9 +398,9 @@ CREATE TABLE `viaje_nave_cabina` (
 --
 
 INSERT INTO `viaje_nave_cabina` (`id_viaje`, `id_nave`, `id_cabina`, `asientos_disponibles`) VALUES
-(1, 1, 1, 180),
-(1, 1, 2, 75),
-(1, 1, 3, 25),
+(1, 1, 1, 1),
+(1, 1, 2, -2),
+(1, 1, 3, 10),
 (2, 12, 1, 200),
 (2, 12, 2, 75),
 (2, 12, 3, 25),
@@ -568,17 +569,20 @@ ALTER TABLE `viaje_puede_ser_hecho_por`
 -- AUTO_INCREMENT de la tabla `reserva`
 --
 ALTER TABLE `reserva`
-  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
   MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
 --
 -- AUTO_INCREMENT de la tabla `usuario_hace_reserva`
 --
 ALTER TABLE `usuario_hace_reserva`
-  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+
 --
 -- Restricciones para tablas volcadas
 --
@@ -654,6 +658,7 @@ ALTER TABLE `viaje_nave_cabina`
 ALTER TABLE `viaje_puede_ser_hecho_por`
   ADD CONSTRAINT `viaje_puede_ser_hecho_por_ibfk_1` FOREIGN KEY (`id_estado_fisico`) REFERENCES `estado_fisico` (`id_estado_fisico`),
   ADD CONSTRAINT `viaje_puede_ser_hecho_por_ibfk_2` FOREIGN KEY (`id_tipo_viaje`) REFERENCES `tipo_viaje` (`id_tipo_viaje`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
