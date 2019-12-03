@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-11-2019 a las 19:02:46
+-- Tiempo de generación: 02-12-2019 a las 01:23:51
 -- Versión del servidor: 10.4.6-MariaDB
 -- Versión de PHP: 7.3.9
 
@@ -78,7 +78,7 @@ CREATE TABLE `estado_reserva` (
 --
 
 INSERT INTO `estado_reserva` (`id_estado_reserva`, `estado`) VALUES
-(1, 'Falta Código medico '),
+(1, 'Falta Codigo medico '),
 (2, 'Falta pago'),
 (3, 'Falta Check-in'),
 (4, 'Listo para viajar'),
@@ -1937,18 +1937,19 @@ CREATE TABLE `reserva` (
   `cod_cabina` int(11) NOT NULL,
   `cod_servicio` int(11) NOT NULL,
   `precio` int(15) NOT NULL,
-  `id_viaje` int(25) NOT NULL
+  `id_viaje` int(25) NOT NULL,
+  `fecha_pago` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `reserva`
 --
 
-INSERT INTO `reserva` (`id_reserva`, `vencimiento_reserva`, `id_estado_reserva`, `cod_cabina`, `cod_servicio`, `precio`, `id_viaje`) VALUES
-(1, '2019-11-09 00:00:00', 4, 2, 1, 1000, 1),
-(2, '2019-11-30 16:00:00', 6, 2, 2, 444, 1),
-(3, '2019-11-30 14:00:00', 3, 3, 3, 100000, 1),
-(5, '2019-12-01 12:00:00', 6, 2, 3, 100000, 1);
+INSERT INTO `reserva` (`id_reserva`, `vencimiento_reserva`, `id_estado_reserva`, `cod_cabina`, `cod_servicio`, `precio`, `id_viaje`, `fecha_pago`) VALUES
+(1, '2019-12-04 00:00:00', 3, 1, 1, 1000, 1, '2019-12-01 20:24:00'),
+(2, '2019-11-30 20:00:00', 4, 1, 2, 444, 1, '0000-00-00 00:00:00'),
+(3, '2019-12-01 14:00:00', 3, 1, 3, 100000, 1, '0000-00-00 00:00:00'),
+(4, '2019-12-01 12:00:00', 3, 1, 3, 100000, 1, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -2585,12 +2586,12 @@ CREATE TABLE `usuario_reserva_cabina` (
 --
 
 INSERT INTO `usuario_reserva_cabina` (`id_reserva`, `id_ubicacion_cabina`, `id_usuario`, `id_lugar`) VALUES
-(1, 307, 1, 1),
-(1, 307, 1, 2),
-(1, 307, 1, 3),
-(1, 326, 2, 1),
-(1, 326, 2, 2),
-(1, 326, 2, 3);
+(1, 6, 1, 1),
+(1, 6, 1, 2),
+(1, 6, 1, 3),
+(2, 7, 1, 1),
+(2, 7, 1, 2),
+(2, 7, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -2678,7 +2679,9 @@ CREATE TABLE `viaje_recorrido` (
 INSERT INTO `viaje_recorrido` (`id_viaje`, `id_lugar`) VALUES
 (1, 1),
 (1, 2),
-(1, 3);
+(1, 3),
+(2, 2),
+(2, 1);
 
 --
 -- Índices para tablas volcadas
@@ -2936,7 +2939,7 @@ ALTER TABLE `viaje_puede_ser_hecho_por`
 -- Filtros para la tabla `viaje_recorrido`
 --
 ALTER TABLE `viaje_recorrido`
-  ADD CONSTRAINT `viaje_recorrido_ibfk_1` FOREIGN KEY (`id_viaje`) REFERENCES `nave` (`id_nave`),
+  ADD CONSTRAINT `viaje_recorrido_ibfk_1` FOREIGN KEY (`id_viaje`) REFERENCES `viaje` (`id_viaje`),
   ADD CONSTRAINT `viaje_recorrido_ibfk_2` FOREIGN KEY (`id_lugar`) REFERENCES `lugar` (`id_lugar`);
 COMMIT;
 

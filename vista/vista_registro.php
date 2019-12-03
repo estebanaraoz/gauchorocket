@@ -5,7 +5,7 @@
     <form action="modelo/modelo_validar_registro.php" method="post">
         <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Email" required> 
         </div>
         <div class="row">
             <div class="col">

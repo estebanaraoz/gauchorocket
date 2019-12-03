@@ -56,8 +56,13 @@ if ($submitbutton)
 {
 if (validatecard($number) !== false)
 {
+	date_default_timezone_set('America/Argentina/Buenos_Aires');
+	$time= date('y/m/d H:i:s');
  $sql = "UPDATE `reserva` SET `id_estado_reserva` = '3' WHERE `reserva`.`id_reserva` = $idreserva;";
-     mysqli_query($conn, $sql) or die("Error al buscar usuario.");
+     mysqli_query($conn, $sql) or die("Error al cambiar estado.");
+	 
+$sql = "UPDATE `reserva` SET `fecha_pago` = '$time' WHERE `reserva`.`id_reserva` = $idreserva;";
+     mysqli_query($conn, $sql) or die("Error al buscar guardar pago.");
     header("Location:/controlador/controlador_ver_reservas.php?idreserva=". $idreserva ."" );
     exit();
 	
